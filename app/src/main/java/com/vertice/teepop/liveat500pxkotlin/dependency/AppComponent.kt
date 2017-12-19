@@ -17,5 +17,5 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(mainFragment: MainFragment)
-    fun inject(apiService: ApiService)
+
 }

@@ -6,7 +6,7 @@ import com.vertice.teepop.liveat500pxkotlin.manager.ApiService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -27,8 +27,13 @@ class NetModule(var baseUrl: String) {
     @Singleton
     fun provideRetrofit(gson: Gson) = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl(baseUrl)
             .build()
+
+    @Provides
+    @Singleton
+    fun provideService(retrofit: Retrofit) =
+            retrofit.create(ApiService::class.java)
 
 }

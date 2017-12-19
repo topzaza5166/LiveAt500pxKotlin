@@ -3,6 +3,7 @@ package com.vertice.teepop.liveat500pxkotlin.fragment
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.vertice.teepop.liveat500pxkotlin.R
 import com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemDao
 import com.vertice.teepop.liveat500pxkotlin.manager.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
@@ -25,13 +27,20 @@ class MainFragment : Fragment() {
         fun onPhotoItemClicked(dao: PhotoItemDao)
     }
 
+    private val TAG: String = MainFragment::class.java.simpleName
+
     @field:[Named("PRIMARY_PREFS")]
     @Inject
     lateinit var pref: SharedPreferences
 
-    val service by lazy {
-        ApiService.create()
-    }
+    @Inject
+    lateinit var service: ApiService
+
+//    val service by lazy {
+//        ApiApiService.create()
+//    }
+
+    private var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +64,14 @@ class MainFragment : Fragment() {
 
     private fun initInstances(rootView: View, savedInstanceState: Bundle?) {
         // Init 'View' instance(s) with rootView.findViewById here
-        service.loadPhotoList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { result -> Toast.makeText(context, result.success.toString(), Toast.LENGTH_SHORT).show() },
-                        { error -> Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show() }
-                )
+        disposable =
+                service.loadPhotoList()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                { result -> Toast.makeText(context, result.success.toString(), Toast.LENGTH_SHORT).show() },
+                                { error -> Log.d(TAG, error.message) }
+                        )
     }
 
 
@@ -71,6 +81,7 @@ class MainFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+        disposable?.dispose()
     }
 
     /*

@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName
  * Created by VerDev06 on 12/18/2017.
  */
 data class PhotoItemCollectionDao(
-        @SerializedName("success") var success: Boolean,
-        @SerializedName("data") var data: List<PhotoItemDao>)
+        @SerializedName("success") var success: Boolean = false,
+        @SerializedName("data") var data: MutableList<PhotoItemDao> = ArrayList())
     : Parcelable {
 
     constructor(parcel: Parcel) : this(

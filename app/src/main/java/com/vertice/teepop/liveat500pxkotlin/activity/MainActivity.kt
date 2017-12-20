@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
+import android.widget.Toast
 import com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemDao
 import com.vertice.teepop.liveat500pxkotlin.R
 import com.vertice.teepop.liveat500pxkotlin.databinding.ActivityMainBinding
@@ -54,9 +55,8 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
         actionBarDrawerToggle.onConfigurationChanged(newConfig)
     }
 
-    override fun onPhotoItemClicked(dao: PhotoItemDao) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
+    override fun onPhotoItemClicked(dao: PhotoItemDao?) {
+        Toast.makeText(this, dao?.username + dao?.caption, Toast.LENGTH_SHORT).show()
     }
 
 }

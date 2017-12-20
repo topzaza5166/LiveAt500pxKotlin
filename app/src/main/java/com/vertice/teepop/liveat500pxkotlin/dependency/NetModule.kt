@@ -19,13 +19,13 @@ class NetModule(var baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideGson() = GsonBuilder()
+    fun provideGson(): Gson = GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             .create()
 
     @Provides
     @Singleton
-    fun provideRetrofit(gson: Gson) = Retrofit.Builder()
+    fun provideRetrofit(gson: Gson): Retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .baseUrl(baseUrl)
@@ -33,7 +33,7 @@ class NetModule(var baseUrl: String) {
 
     @Provides
     @Singleton
-    fun provideService(retrofit: Retrofit) =
+    fun provideService(retrofit: Retrofit): ApiService =
             retrofit.create(ApiService::class.java)
 
 }

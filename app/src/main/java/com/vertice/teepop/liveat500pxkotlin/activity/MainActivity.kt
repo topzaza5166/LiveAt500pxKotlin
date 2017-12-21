@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.MenuItem
 import android.widget.Toast
 import com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemDao
 import com.vertice.teepop.liveat500pxkotlin.R
@@ -55,8 +56,15 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
         actionBarDrawerToggle.onConfigurationChanged(newConfig)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
+            return true
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onPhotoItemClicked(dao: PhotoItemDao?) {
         Toast.makeText(this, dao?.username + dao?.caption, Toast.LENGTH_SHORT).show()
     }
+
 
 }

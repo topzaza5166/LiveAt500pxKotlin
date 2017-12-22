@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.AbsListView
-import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.Toast
 import com.vertice.teepop.liveat500pxkotlin.MainApplication
@@ -82,8 +81,11 @@ class MainFragment : Fragment() {
         MainApplication.appComponent.inject(this)
         init(savedInstanceState)
 
-        if (savedInstanceState != null)
-            onRestoreInstanceState(savedInstanceState)
+        savedInstanceState?.let {
+            onRestoreInstanceState(it)
+        }
+//        if (savedInstanceState != null)
+//            onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -103,20 +105,22 @@ class MainFragment : Fragment() {
         // Init 'View' instance(s) with rootView.findViewById here
         listAdapter = PhotoListAdapter(lastPositionInteger)
         listAdapter.dao = photoListManager.dao
-        binding.listView.adapter = listAdapter
-        binding.listView.setOnItemClickListener({ adapterView, view, i, l ->
-            onListViewItemClickListener(adapterView, view, i, l)
-        })
-        binding.listView.setOnScrollListener(onScrollListener)
+        binding.apply {
+            listView.adapter = listAdapter
+            listView.setOnItemClickListener({ _, _, position: Int, _ ->
+                onListViewItemClickListener(position)
+            })
+            listView.setOnScrollListener(onScrollListener)
 
-        binding.swipeRefreshLayout.setOnRefreshListener({
-            refreshData()
-        })
+            swipeRefreshLayout.setOnRefreshListener({
+                refreshData()
+            })
 
-        binding.btnNewPhotos.setOnClickListener({
-            hideButtonNewPhoto()
-            binding.listView.smoothScrollToPosition(0)
-        })
+            btnNewPhotos.setOnClickListener({
+                hideButtonNewPhoto()
+                listView.smoothScrollToPosition(0)
+            })
+        }
 
         if (savedInstanceState == null)
             refreshData()
@@ -229,7 +233,7 @@ class MainFragment : Fragment() {
         }
         clearLoadingMoreFlagIfCapable(mode)
         listAdapter.dao = photoListManager.dao
-        listAdapter.notifyDataSetChanged()
+//        listAdapter.notifyDataSetChanged()
 
         if (mode == MODE_RELOAD_NEWER) {
             //Maintain Scroll Position
@@ -282,11 +286,12 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun onListViewItemClickListener(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    private fun onListViewItemClickListener(position: Int) {
         if (position < photoListManager.getCount()) {
-            val listener = activity
-            if (listener is FragmentListener)
-                listener.onPhotoItemClicked(photoListManager.dao.data.get(position))
+            val listener = activity as? FragmentListener
+            listener?.onPhotoItemClicked(photoListManager.dao.data[position])
+//            if (listener is FragmentListener)
+//                listener.onPhotoItemClicked(photoListManager.dao.data.get(position))
         }
     }
 

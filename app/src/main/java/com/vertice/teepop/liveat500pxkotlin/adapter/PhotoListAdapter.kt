@@ -10,6 +10,8 @@ import com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemCollectionDao
 import com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemDao
 import com.vertice.teepop.liveat500pxkotlin.utils.MutableInteger
 import com.vertice.teepop.liveat500pxkotlin.view.PhotoListItem
+import kotlin.properties.Delegates
+import kotlin.reflect.KProperty
 
 /**
  * Created by VerDev06 on 12/19/2017.
@@ -17,7 +19,8 @@ import com.vertice.teepop.liveat500pxkotlin.view.PhotoListItem
 class PhotoListAdapter(var lastPositionInteger: MutableInteger = MutableInteger())
     : BaseAdapter() {
 
-    var dao: PhotoItemCollectionDao? = null
+    var dao: PhotoItemCollectionDao by Delegates
+            .observable(PhotoItemCollectionDao()) { _, _, _ -> notifyDataSetChanged() }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         if (position == count - 1) {
@@ -27,11 +30,12 @@ class PhotoListAdapter(var lastPositionInteger: MutableInteger = MutableInteger(
 
         val dao: PhotoItemDao? = getItem(position) as? PhotoItemDao
 
-        val item = convertView as? PhotoListItem ?: PhotoListItem(parent?.context!!)
-        item.setNameText(dao?.caption)
-        item.setDescriptionText(dao?.username + "\n" + dao?.camera)
-        item.setImageUrl(dao?.imageUrl)
-
+        val item: PhotoListItem = (convertView as? PhotoListItem ?: PhotoListItem(parent?.context!!))
+                .apply {
+                    setNameText(dao?.caption)
+                    setDescriptionText(dao?.username + "\n" + dao?.camera)
+                    setImageUrl(dao?.imageUrl)
+                }
 
         if (position > lastPositionInteger.value) {
             val anim = AnimationUtils.loadAnimation(parent?.context, R.anim.up_from_bottom)
@@ -43,7 +47,7 @@ class PhotoListAdapter(var lastPositionInteger: MutableInteger = MutableInteger(
     }
 
     override fun getItem(p0: Int): Any {
-        return dao?.data?.get(p0) ?: Any()
+        return dao.data[p0]
     }
 
     override fun getItemId(p0: Int): Long {
@@ -51,7 +55,7 @@ class PhotoListAdapter(var lastPositionInteger: MutableInteger = MutableInteger(
     }
 
     override fun getCount(): Int {
-        return dao?.data?.size ?: 0
+        return dao.data.size + 1
     }
 
     fun increaseLastPosition(amount: Int) {

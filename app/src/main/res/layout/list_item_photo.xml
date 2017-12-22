@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="dao"
+            type="com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemDao" />
+    </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -10,7 +16,8 @@
             android:id="@+id/ivImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:imageUrl="@{dao.imageUrl}"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,7 +36,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#fff"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:text="@{dao.caption}"/>
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -38,7 +46,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#fff"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:text='@{dao.username + "\n" + dao.camera}'/>
 
         </LinearLayout>
 

@@ -2,10 +2,12 @@ package com.vertice.teepop.liveat500pxkotlin.view
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.databinding.DataBindingUtil
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.bumptech.glide.Glide
+import com.vertice.teepop.liveat500pxkotlin.dao.PhotoItemDao
 import com.vertice.teepop.liveat500pxkotlin.databinding.ListItemPhotoBinding
 import com.vertice.teepop.liveat500pxkotlin.view.state.BundleSavedState
 
@@ -94,6 +96,12 @@ class PhotoListItem : BaseCustomViewGroup {
         super.onMeasure(widthMeasureSpec, newHeightMeasureApec)
         //Self
         setMeasuredDimension(width, height)
+    }
+
+    fun setDao(dao: PhotoItemDao?) {
+        dao.let {
+            binding.dao = it
+        }
     }
 
     fun setNameText(name: String?) {

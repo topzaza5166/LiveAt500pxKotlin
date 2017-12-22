@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
     }
 
     override fun onPhotoItemClicked(dao: PhotoItemDao?) {
-        Toast.makeText(this, dao?.username + dao?.caption, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, dao?.username + " " + dao?.caption, Toast.LENGTH_SHORT).show()
     }
 
 

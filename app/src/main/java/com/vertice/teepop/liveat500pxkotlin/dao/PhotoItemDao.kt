@@ -11,33 +11,33 @@ import java.util.*
 data class PhotoItemDao(@SerializedName("id")
                         var id: Int = 0,
                         @SerializedName("link")
-                        var link: String? = null,
+                        var link: String? = "",
                         @SerializedName("image_url")
-                        var imageUrl: String? = null,
+                        var imageUrl: String? = "",
                         @SerializedName("caption")
-                        var caption: String? = null,
+                        var caption: String? = "",
                         @SerializedName("user_id")
                         var userId: Int = 0,
                         @SerializedName("username")
-                        var username: String? = null,
+                        var username: String? = "",
                         @SerializedName("profile_picture")
-                        var profilePicture: String? = null,
+                        var profilePicture: String? = "",
                         @SerializedName("tags")
                         var tags: List<String> = ArrayList(),
                         @SerializedName("created_time")
                         var createdTime: Date? = null,
                         @SerializedName("camera")
-                        var camera: String? = null,
+                        var camera: String? = "",
                         @SerializedName("lens")
-                        var lens: String? = null,
+                        var lens: String? = "",
                         @SerializedName("focal_length")
-                        var focalLength: String? = null,
+                        var focalLength: String? = "",
                         @SerializedName("iso")
-                        var iso: String? = null,
+                        var iso: String? = "",
                         @SerializedName("shutter_speed")
-                        var shutterSpeed: String? = null,
+                        var shutterSpeed: String? = "",
                         @SerializedName("aperture")
-                        var aperture: String? = null
+                        var aperture: String? = ""
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this() {

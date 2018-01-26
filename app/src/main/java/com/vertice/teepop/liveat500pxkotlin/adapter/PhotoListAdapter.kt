@@ -32,9 +32,10 @@ class PhotoListAdapter(var lastPositionInteger: MutableInteger = MutableInteger(
 
         val item: PhotoListItem = (convertView as? PhotoListItem ?: PhotoListItem(parent?.context!!))
                 .apply {
-                    setNameText(dao?.caption)
-                    setDescriptionText(dao?.username + "\n" + dao?.camera)
-                    setImageUrl(dao?.imageUrl)
+                    setDao(dao)
+//                    setNameText(dao?.caption)
+//                    setDescriptionText(dao?.username + "\n" + dao?.camera)
+//                    setImageUrl(dao?.imageUrl)
                 }
 
         if (position > lastPositionInteger.value) {

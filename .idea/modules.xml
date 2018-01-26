@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LiveAt500pxKotlin.iml" filepath="$PROJECT_DIR$/.idea/LiveAt500pxKotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LiveAt500pxKotlin.iml" filepath="$PROJECT_DIR$/LiveAt500pxKotlin.iml" />
+      <module fileurl="file://C:\Android\LiveAt500pxKotlin\.idea\LiveAt500pxKotlin.iml" filepath="C:\Android\LiveAt500pxKotlin\.idea\LiveAt500pxKotlin.iml" />
       <module fileurl="file://D:\Project\Android Project\LiveAt500pxKotlin\LiveAt500pxKotlin.iml" filepath="D:\Project\Android Project\LiveAt500pxKotlin\LiveAt500pxKotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://D:\Project\Android Project\LiveAt500pxKotlin\app\app.iml" filepath="D:\Project\Android Project\LiveAt500pxKotlin\app\app.iml" />

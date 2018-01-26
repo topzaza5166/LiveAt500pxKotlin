@@ -30,13 +30,10 @@ class PhotoListAdapter(var lastPositionInteger: MutableInteger = MutableInteger(
 
         val dao: PhotoItemDao? = getItem(position) as? PhotoItemDao
 
-        val item: PhotoListItem = (convertView as? PhotoListItem ?: PhotoListItem(parent?.context!!))
-                .apply {
-                    setDao(dao)
-//                    setNameText(dao?.caption)
-//                    setDescriptionText(dao?.username + "\n" + dao?.camera)
-//                    setImageUrl(dao?.imageUrl)
-                }
+        val item = convertView as? PhotoListItem ?: PhotoListItem(parent?.context!!)
+        item.apply {
+            setDao(dao)
+        }
 
         if (position > lastPositionInteger.value) {
             val anim = AnimationUtils.loadAnimation(parent?.context, R.anim.up_from_bottom)

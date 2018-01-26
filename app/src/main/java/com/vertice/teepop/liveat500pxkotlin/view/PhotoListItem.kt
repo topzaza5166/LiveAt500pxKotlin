@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.vertice.teepop.liveat500pxkotlin.databinding.ListItemPhotoBinding
 import com.vertice.teepop.liveat500pxkotlin.view.state.BundleSavedState
@@ -102,6 +103,10 @@ class PhotoListItem : BaseCustomViewGroup {
 
     fun setDescriptionText(description: String?) {
         binding.tvDescription.text = description
+    }
+
+    fun getImageView(): ImageView {
+        return binding.ivImg
     }
 
     fun setImageUrl(url: String?) {

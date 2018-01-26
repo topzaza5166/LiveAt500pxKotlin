@@ -3,4 +3,6 @@
     <string name="open_drawer">Open Menu</string>
     <string name="close_drawer">Close Menu</string>
     <string name="new_photos">New Photos</string>
+
+    <string name="photo_item_image">photoItemImage</string>
 </resources>

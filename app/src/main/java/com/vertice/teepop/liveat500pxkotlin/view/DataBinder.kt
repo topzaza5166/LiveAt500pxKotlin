@@ -7,9 +7,10 @@ import com.bumptech.glide.Glide
 /**
  * Created by VerDev06 on 12/19/2017.
  */
-class DataBinder {
+object DataBinder {
 
-    @BindingAdapter("imageUrl")
+    @BindingAdapter("app:imageUrl")
+    @JvmStatic
     fun setImageUrl(imageView: ImageView, url: String) {
         Glide.with(imageView.context)
                 .load(url)

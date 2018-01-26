@@ -20,6 +20,7 @@ import com.vertice.teepop.liveat500pxkotlin.databinding.FragmentMainBinding
 import com.vertice.teepop.liveat500pxkotlin.manager.ApiService
 import com.vertice.teepop.liveat500pxkotlin.manager.PhotoListManager
 import com.vertice.teepop.liveat500pxkotlin.utils.MutableInteger
+import com.vertice.teepop.liveat500pxkotlin.view.PhotoListItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -34,7 +35,7 @@ class MainFragment : Fragment() {
     // Variable
 
     interface FragmentListener {
-        fun onPhotoItemClicked(dao: PhotoItemDao?)
+        fun onPhotoItemClicked(view: View?, dao: PhotoItemDao?)
     }
 
     private val TAG: String = MainFragment::class.java.simpleName
@@ -107,8 +108,9 @@ class MainFragment : Fragment() {
         listAdapter.dao = photoListManager.dao
         binding.apply {
             listView.adapter = listAdapter
-            listView.setOnItemClickListener({ _, _, position: Int, _ ->
-                onListViewItemClickListener(position)
+            listView.setOnItemClickListener({ _, view: View, position: Int, _ ->
+                val imageView = (view as? PhotoListItem)?.getImageView()
+                onListViewItemClickListener(imageView, position)
             })
             listView.setOnScrollListener(onScrollListener)
 
@@ -286,10 +288,10 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun onListViewItemClickListener(position: Int) {
+    private fun onListViewItemClickListener(view: View?, position: Int) {
         if (position < photoListManager.getCount()) {
             val listener = activity as? FragmentListener
-            listener?.onPhotoItemClicked(photoListManager.dao.data[position])
+            listener?.onPhotoItemClicked(view, photoListManager.dao.data[position])
 //            if (listener is FragmentListener)
 //                listener.onPhotoItemClicked(photoListManager.dao.data.get(position))
         }

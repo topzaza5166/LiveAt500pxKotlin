@@ -108,20 +108,20 @@ class MainFragment : Fragment() {
         listAdapter.dao = photoListManager.dao
         binding.apply {
             listView.adapter = listAdapter
-            listView.setOnItemClickListener({ _, view: View, position: Int, _ ->
+            listView.setOnItemClickListener { _, view: View, position: Int, _ ->
                 val imageView = (view as? PhotoListItem)?.getImageView()
                 onListViewItemClickListener(imageView, position)
-            })
+            }
             listView.setOnScrollListener(onScrollListener)
 
-            swipeRefreshLayout.setOnRefreshListener({
+            swipeRefreshLayout.setOnRefreshListener {
                 refreshData()
-            })
+            }
 
-            btnNewPhotos.setOnClickListener({
+            btnNewPhotos.setOnClickListener {
                 hideButtonNewPhoto()
                 listView.smoothScrollToPosition(0)
-            })
+            }
         }
 
         if (savedInstanceState == null)
@@ -153,10 +153,8 @@ class MainFragment : Fragment() {
      */
     private fun onRestoreInstanceState(savedInstanceState: Bundle) {
         // Restore Instance State here
-        photoListManager.onRestoreInstanceState(
-                savedInstanceState.getBundle("photoListManger"))
-        lastPositionInteger.onRestoreInstanceState(
-                savedInstanceState.getBundle("lastPositionInteger"))
+        photoListManager.onRestoreInstanceState(savedInstanceState.getBundle("photoListManger"))
+        lastPositionInteger.onRestoreInstanceState(savedInstanceState.getBundle("lastPositionInteger"))
     }
 
     private fun refreshData() {

@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.transition.Transition
 import android.support.transition.TransitionInflater
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -18,6 +17,7 @@ import com.vertice.teepop.liveat500pxkotlin.R
 import com.vertice.teepop.liveat500pxkotlin.databinding.ActivityMainBinding
 import com.vertice.teepop.liveat500pxkotlin.fragment.MainFragment
 import com.vertice.teepop.liveat500pxkotlin.fragment.PhotoInfoSummaryFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
 
@@ -49,7 +49,10 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
         binding.drawerLayout.addDrawerListener(actionBarDrawerToggle)
 
         supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        navigation.setNavigationItemSelectedListener(navigationItemSelectedListener)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -65,6 +68,11 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true
+//        when (item?.itemId) {
+//            android.R.id.home -> {
+//                drawerLayout.openDrawer(Gravity.START)
+//            }
+//        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -101,7 +109,7 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
                 .inflateTransition(android.R.transition.explode)
 
         // Setup exit transition on first fragment
-        supportFragmentManager.findFragmentById(R.id.contentContainer).apply {
+        supportFragmentManager.findFragmentById(R.id.contentContainer)?.apply {
             sharedElementReturnTransition = changeTransform
             exitTransition = explodeTransform
         }
@@ -119,4 +127,29 @@ class MainActivity : AppCompatActivity(), MainFragment.FragmentListener {
                 .commit()
     }
 
+    private val navigationItemSelectedListener: (MenuItem) -> Boolean = { it ->
+        when (it.itemId) {
+            R.id.navItem1 -> {
+                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+                drawerLayout.closeDrawers()
+                true
+            }
+            R.id.navItem2 -> {
+                Toast.makeText(this, "Blog", Toast.LENGTH_SHORT).show()
+                drawerLayout.closeDrawers()
+                true
+            }
+            R.id.navItem3 -> {
+                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show()
+                drawerLayout.closeDrawers()
+                true
+            }
+            R.id.navItem4 -> {
+                Toast.makeText(this, "Contact", Toast.LENGTH_SHORT).show()
+                drawerLayout.closeDrawers()
+                true
+            }
+            else -> false
+        }
+    }
 }

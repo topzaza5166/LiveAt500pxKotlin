@@ -53,7 +53,7 @@ class PhotoListManager(var prefs: SharedPreferences) {
     }
 
     fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        dao = savedInstanceState.getParcelable("dao")
+        dao = savedInstanceState.getParcelable("dao") as PhotoItemCollectionDao
     }
 
     private fun saveCache() {
